@@ -1,0 +1,13 @@
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.exe
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.deps.json
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.runtimeconfig.json
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.runtimeconfig.dev.json
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.dll
+C:\Users\Gregor\source\repos\seminarskaNaloga\bin\Debug\netcoreapp3.1\seminarskaNaloga.pdb
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.csprojAssemblyReference.cache
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.AssemblyInfoInputs.cache
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.AssemblyInfo.cs
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.csproj.CoreCompileInputs.cache
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.dll
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.pdb
+C:\Users\Gregor\source\repos\seminarskaNaloga\obj\Debug\netcoreapp3.1\seminarskaNaloga.genruntimeconfig.cache
