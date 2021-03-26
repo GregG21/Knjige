@@ -91,23 +91,32 @@ namespace seminarskaNaloga
             Array.Resize(ref tabKnjig, tabKnjig.Length + 1);
             tabKnjig[tabKnjig.Length - 1] = book;
         }
-        public static void RemoveBookFromArray(Books book)
-        {
-            // Odsranimo knjigo iz seznama
-           tabKnjig = Array.FindAll(tabKnjig, index => index != book).ToArray();
-           Array.Resize(ref tabKnjig, tabKnjig.Length - 1);
+        //public static void RemoveBookFromArray(Books book)
+        //{
+        //    // Odsranimo knjigo iz seznama
+        //   tabKnjig = Array.FindAll(tabKnjig, index => index != book).ToArray();
+        //   Array.Resize(ref tabKnjig, tabKnjig.Length - 1);
 
-        }
-        public static void RemoveBookFromArray(int index)
+        //}
+        public static void RemoveBookFromArray()
         {
-            //Odstanimo knjigo na indexu
-            // knjigi damo vrednost null
-            tabKnjig[index] = null;
-            //preiscemo tabelo in najdemo knjige, ki nimajo vrednost nul(vse razen te, ki smo jo odsranili)
-            //in jih ponovno dodamo v tabelo, posledicno zbrisemo iz tabele knjigo,ki je dobila vrednost null
-            tabKnjig = Array.FindAll(tabKnjig, index => index != null).ToArray();
-            // Tabelo nastavimo na novo velikost 
-            Array.Resize(ref tabKnjig, tabKnjig.Length - 1);
+            izpis();
+            Console.WriteLine("Izberite indeks knjige, ki jo zelite izbrisati");
+
+            int index = Convert.ToInt32(Console.ReadLine());
+            if(tabKnjig[index] != null)
+            {
+                tabKnjig[index] = null;
+                //preiscemo tabelo in najdemo knjige, ki nimajo vrednost nul(vse razen te, ki smo jo odsranili)
+                //in jih ponovno dodamo v tabelo, posledicno zbrisemo iz tabele knjigo,ki je dobila vrednost null
+                tabKnjig = Array.FindAll(tabKnjig, index => index != null).ToArray();
+                
+                moznosti();
+            } else
+            {
+                Console.WriteLine("Knjiga, ki ste jo zeleli izbrisati NE obstaja");
+            }
+            
         }
 
         static void title()
@@ -128,29 +137,37 @@ namespace seminarskaNaloga
         static void vnos()
         {
             Console.WriteLine();
-            Console.Write("Vnesite naslov knjige:");
+            Console.Write("Vnesite naslov knjige:\n");
             string naslov = Console.ReadLine();
-            Console.WriteLine();
 
-            Console.Write("Vnesite avtorja knjige:");
+            
+            Console.Write("Vnesite avtorja knjige:\n");
             string avtor = Console.ReadLine();
-            Console.WriteLine();
+  
 
-            Console.Write("Vnesite oceno knjige:");
-            double povprecnaOcena = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine();
 
-            Console.Write("Vnesite jezikovno kodo knjige:");
+            string povprecnaOcena_string;
+            double povprecnaOcena_double;
+            // preverimo ce je vnos pravilen, ce ni, ponovimo
+            do
+            {
+                Console.Write("Vnesite oceno knjige:\n");
+                povprecnaOcena_string = Console.ReadLine();
+            } while (!double.TryParse(povprecnaOcena_string, out povprecnaOcena_double));
+            
+
+
+            Console.Write("Vnesite jezikovno kodo knjige:\n");
             string jezikKoda = Console.ReadLine();
-            Console.WriteLine();
+            int steviloStrani_int;
+            string steviloStrani_string;
+            // preverimo ce je vnos pravilen, ce ni, ponovimo
+            do
+            {
+                Console.Write("Vnesite stevilo strani knjige:\n");
+                steviloStrani_string = Console.ReadLine();
+            } while (!int.TryParse(steviloStrani_string, out steviloStrani_int));
 
-            Console.Write("Vnesite stevilo strani knjige:");
-            int steviloStrani = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-
-            //Console.Write("Vnesite naslov knjige:");
-            //string steviloOcen = Console.ReadLine();
-            //Console.WriteLine();
             DateTime datum_Izdaje_value;
             string datum_Izdaje;
             do
@@ -158,24 +175,46 @@ namespace seminarskaNaloga
                 Console.Write("Vnesite datum izdaje knjige:");
                 Console.WriteLine("Primer: 01/01/2021");
                 datum_Izdaje = Console.ReadLine();
-            } while (!DateTime.TryParseExact(datum_Izdaje, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture,  System.Globalization.DateTimeStyles.None, out datum_Izdaje_value));
+            } while (!DateTime.TryParseExact(datum_Izdaje, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None, out datum_Izdaje_value));
             
             Console.WriteLine();
 
             Console.Write("Vnesite zaloznika knjige: ");
             string zaloznik = Console.ReadLine();
             Console.WriteLine();
-            try
-            {
-                Books novaKnjiga = new Books(naslov, avtor, povprecnaOcena, jezikKoda, steviloStrani, datum_Izdaje_value, zaloznik);
-                Console.WriteLine("Uspesno ste vnesli novo knjigo");
+            
+                Books novaKnjiga = new Books(naslov, avtor, povprecnaOcena_double, jezikKoda, steviloStrani_int, datum_Izdaje_value, zaloznik);
+                
+                if (novaKnjiga != null)
+                {
+                    AddBookToArray(novaKnjiga);
+                    Console.WriteLine($"Dodali ste knjigo:\n {novaKnjiga}\n");
+                    Console.WriteLine("Uspesno ste vnesli novo knjigo\n");
+                
+                }
+                else
+                {
+                    Console.WriteLine("Knjige ni bilo mozno dodati\n");
+                    Console.WriteLine("Zelite poskusiti ponovno");
+                    Console.WriteLine("y) Ce zelite ponovno poskusiti dodati knjigo");
+                    Console.WriteLine("n) Ce NE zelite ponovno poskusiti dodati knjigo");
+                    switch (Console.ReadLine())
+                    {
+                        case "y":
+                            vnos();
+                            break;
+                        case "n":
+                            break;
+                        default:
+                            Console.WriteLine("Izberite pravilno komando");
+                            break;
+                    }
+                }
                 moznosti();
-            }
-            catch
-            {
-                vnos();
-            }
+            
         }
+        
         static void ureditev()
         {
             izpis();
@@ -201,14 +240,6 @@ namespace seminarskaNaloga
                     break;
             }
             void uredi()
-            //    this.naslov = naslov;
-            //this.avtor = avtor;
-   
-            //this.jezikKoda = jezikKoda;
-            //this.steviloStrani = steviloStrani;
-            //steviloOcen = 1;
-            //this.datumIzdaje = datumIzdaje;
-            //this.zaloznik = zaloznik;
             {
                 Console.WriteLine("Izberite kaj zelite urediti\n");
                 Console.WriteLine("a) Ce zelite urediti AVTORJA knjige");
@@ -257,10 +288,9 @@ namespace seminarskaNaloga
             Console.WriteLine("2) Za vnos knjige");
             Console.WriteLine("3) Za iskanje knjige");
             Console.WriteLine("4) Za ureditev knjige");
-
+            Console.WriteLine("5) Za odstranitev knjige");
+            Console.WriteLine("s) Shranite svoje delo");
             Console.WriteLine("q) Za izhod iz programa");
-
-
 
         }
         static void izpis()
@@ -276,27 +306,37 @@ namespace seminarskaNaloga
         static void iskanjeKnjige()
         {
             Console.WriteLine();
-            Console.WriteLine("Vpisite niz, ki ga knjiga vsebuje");
+            Console.WriteLine("Vpisite niz, ki ga knjiga vsebuje\n");
             string iskalniNiz = Console.ReadLine().Trim().ToLower();
             Console.WriteLine(iskalniNiz);
             foreach (var book in tabKnjig)
             {
                 if(book.naslov.ToLower().Contains(iskalniNiz))
                 {
-                    Console.WriteLine($"{Array.IndexOf(tabKnjig, book)}Naslov knjige: {book.naslov}\nAvtor Knjige: {book.avtor}\nOcena Knjige: {book.povprecnaOcena}");
+                    Console.WriteLine($"{Array.IndexOf(tabKnjig, book)} - {book}");
                     Console.WriteLine();
-                } else
-                {
-                    Console.WriteLine("Niz ne ustreza nobeni knjigi");
                 }
-                
+              
             }
             Console.WriteLine();
             moznosti();
 
         }
 
+        public static void shrani() {
+            using (StreamWriter sw = new StreamWriter("books.txt"))
+            {
+                foreach(var book in tabKnjig)
+                {
+                    if(book != null)
+                    {
+                        sw.WriteLine($"{book.naslov}\t{book.avtor}\t{book.povprecnaOcena}\t{book.jezikKoda}\t{book.steviloStrani}\t{book.steviloOcen}\t{book.datumIzdaje}\t{book.zaloznik}");
 
+                    }
+                    }
+            }
+
+        }
 
 
 
@@ -313,8 +353,6 @@ namespace seminarskaNaloga
             moznosti();
            
             //AddBookToArray(peterPan);
-                        
-
             //Console.WriteLine("[{0}]", string.Join(", ", tabKnjig[tabKnjig.Length - 1]));
             ////RemoveBookFromArray(peterPan);
             //Console.WriteLine("[{0}]", string.Join(", ", tabKnjig[tabKnjig.Length - 1]));
@@ -337,6 +375,12 @@ namespace seminarskaNaloga
                         break;
                     case "4":
                         ureditev();
+                        break;
+                    case "5":
+                        RemoveBookFromArray();
+                        break;
+                    case "s":
+                        shrani();
                         break;
                     case "q":
                         Environment.Exit(0);
